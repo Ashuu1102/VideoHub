@@ -71,7 +71,7 @@ const registerUser = asyncHandler(async (req, res) => {
     if(!avatarLocalPath){
         throw new ApiError(400, "Avatar file is required")
     }
-
+``
     const avatar = await uploadOnCloudinary(avatarLocalPath)
     const coverImage = await uploadOnCloudinary(coverImageLocalPath)
     
@@ -161,8 +161,8 @@ const logoutUser = asyncHandler(async(req, res) => {
     await User.findByIdAndUpdate(
         req.user._id,
         {
-            $set: {
-                refreshToken: undefined
+            $unset: {
+                refreshToken: 1
             }
         },
         {
@@ -221,6 +221,10 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
 
 const changeCurrentPassword = asyncHandler(async(req, res) => {
     const {oldPassword, newPassword} = req.body
+
+    if (!oldPassword || !newPassword) {
+        throw new ApiError(400, "Both old and new passwords are required");
+    }
 
     const user = await User.findById(req.user?._id)
     const isPasswordCorrect = await user.isPasswordCorrect(oldPassword)
