@@ -42,16 +42,22 @@ const publishAVideo = asyncHandler(async (req, res) => {
     const { title, description} = req.body
     // TODO: get video, upload to cloudinary, create video
 
-    if(!req.file){
-        throw new ApiError(400, "No file uplaoded")
+    const videoFiles = req.files["videoFile"]
+    const thumbnailFiles = req.files["thumbnail"]
+
+    if(!videoFiles || !videoFiles.length){
+        throw new ApiError(400, "No video file uploaded")
+    }
+    if(!thumbnailFiles || !thumbnailFiles.length){
+        throw new ApiError(400, "No thumbnail file uploaded")
     }
 
-    const uploadedVideo = await uploadOnCloudinary(req.file.path, "video")
-    if(!uploadedVideo){
-        throw new ApiError(404, "Video upload failed")
-    }
+    const uploadedVideo = await uploadOnCloudinary(videoFiles[0].path, "video")
 
-    const thumbnail = uploadedVideo.thumbnail || uploadedVideo.url
+    if (!uploadedVideo) {
+        throw new ApiError(404, "Video upload failed");
+    }
+    const thumbnail = thumbnailFiles[0].path || uploadedVideo.url
 
     const video = new Video({
         videoFile: uploadedVideo.url,

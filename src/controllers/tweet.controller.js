@@ -31,13 +31,13 @@ const getUserTweets = asyncHandler(async (req, res) => {
     // TODO: get user tweets
     const {userId} = req.params
     
-    if(isValidObjectId(userId)){
+    if(!isValidObjectId(userId)){
         throw new ApiError(400, "Invalid user id")
     }
 
     const tweets = await Tweet.aggregate([
         {
-            $match: {owner: mongoose.Types.ObjectId(userId)}
+            $match: {owner: new mongoose.Types.ObjectId(userId)}
         },
         {
             $lookup: {
@@ -66,7 +66,7 @@ const getUserTweets = asyncHandler(async (req, res) => {
 
     return res 
         .status(200)
-        .json(new ApiResponse(200, "Tweets fetched successfully"))
+        .json(new ApiResponse(200, tweets, "Tweets fetched successfully"))
 })
 
 const updateTweet = asyncHandler(async (req, res) => {

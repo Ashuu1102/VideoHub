@@ -1,9 +1,7 @@
 import express from "express"
 import cors from "cors"
 import cookieParser from "cookie-parser"
-import userRouter from "./routes/user.routes.js"
-import tweetRouter from "./routes/tweet.route.js"
-import videoRouter from "./routes/video.route.js"
+
 
 const app = express()
 
@@ -20,6 +18,8 @@ app.use(cookieParser())
 
 // routes import
 import userRouter from "./routes/user.routes.js"
+import tweetRouter from "./routes/tweet.route.js"
+import videoRouter from "./routes/video.route.js"
 
 // routes decleration
 app.use("/api/v1/users", userRouter)

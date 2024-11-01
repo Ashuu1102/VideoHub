@@ -6,9 +6,9 @@ import {
     updateVideo,
     deleteVideo,
     togglePublishStatus
-} from "../controllers/video.controller"
-import {verifyJWT} from "../middlewares/auth.middleware"
-import { upload } from "../middlewares/multer.middleware";
+} from "../controllers/video.controller.js"
+import {verifyJWT} from "../middlewares/auth.middleware.js"
+import { upload } from "../middlewares/multer.middleware.js";
 
 
 
@@ -20,7 +20,7 @@ router.route("/")
         .get(getAllVideos)
         .post(upload.fields([
             {
-                name: "vidoeFile",
+                name: "videoFile",
                 maxCount: 1
             },
             {
