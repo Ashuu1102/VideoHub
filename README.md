@@ -1,6 +1,6 @@
 # VideoHub
 
-Video Hub Backend
+##Video Hub Backend
 The Video Hub is a robust backend application designed to power a dynamic video sharing platform. Built using Node.js and Express, this application facilitates user authentication, video uploads, commenting, subscription functionalities, and a unique tweet feature for sharing thoughts on videos. The backend leverages MongoDB for efficient data storage and retrieval, ensuring a seamless user experience.
 
 Key Features
